@@ -5,6 +5,8 @@ import { PromptTemplate } from "@langchain/core/prompts";
 import { createStuffDocumentsChain } from "langchain/chains/combine_documents";
 import { JsonOutputParser } from "@langchain/core/output_parsers";
 
+import { SummarizeResponse } from "../../shared";
+
 export class Summarizer {
   textSplitter: RecursiveCharacterTextSplitter;
   llm: any;
@@ -28,14 +30,20 @@ export class Summarizer {
     this.llm = new ChatOpenAI({ model: "gpt-3.5-turbo", temperature: 0.4 });
   }
 
-  public async summarize(url: string) {
+  public async summarize(url: string): Promise<SummarizeResponse> {
+    console.log("start processing");
     const transcript = await YoutubeLoader.createFromUrl(url).load();
+
+    console.log("transcript is obtained");
 
     const chain = await createStuffDocumentsChain({
       llm: this.llm,
       outputParser: new JsonOutputParser(),
       prompt: PromptTemplate.fromTemplate(this.combinePromptTemplate),
     });
+
+    console.log("LLM is accessible");
+    console.log("chain is built");
 
     return await chain.invoke({
       context: transcript,
