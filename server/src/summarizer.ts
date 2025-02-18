@@ -27,7 +27,7 @@ export class Summarizer {
       chunkSize: 10000,
     });
 
-    this.llm = new ChatOpenAI({ model: "gpt-3.5-turbo", temperature: 0.4 });
+    this.llm = new ChatOpenAI({ model: "gpt-4o", temperature: 0.4 });
   }
 
   public async summarize(url: string): Promise<SummarizeResponse> {

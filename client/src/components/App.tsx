@@ -8,7 +8,7 @@ import {
   Spin,
   Typography,
 } from "antd";
-import { FC, useState } from "react";
+import React, { FC, useState } from "react";
 import { Toaster } from "react-hot-toast";
 
 import { SummarizeDto, SummarizeResponse } from "../../../shared";
